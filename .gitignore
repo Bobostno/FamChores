@@ -1,0 +1,54 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# local data — the SQLite database is created and seeded automatically
+/data
+*.db
+*.db-wal
+*.db-shm
+
+# env files (keep the example, never commit real secrets)
+.env*
+!.env.example
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.log
+
+# editor / OS noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+# misc
+*.pem
