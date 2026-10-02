@@ -18,6 +18,9 @@ npm run dev
 
 Open <http://localhost:3000>. On first run the SQLite database is created and seeded with a demo family.
 
+Running this on your own server with a real HTTPS hostname so the family can add it
+to a phone's home screen? See **[DEPLOY.md](DEPLOY.md)**.
+
 ### Demo accounts
 
 The seed creates **The Rivera Family** (invite code `RIVERA24`). Every account uses the password `demo1234`:
@@ -95,6 +98,10 @@ assignee) and can only tick off chores for **today**.
 | `npm run check`        | typecheck + lint + build                             |
 | `npm run smoke`        | Route-protection and content checks (server must be running) |
 | `npm run verify:ledger`| Points-ledger invariants against a database snapshot |
+| `npm run verify:seed-gate` | Boots the build and asserts production starts with an empty database |
+| `npm run verify:manifest`  | Manifest, icons and home-screen head tags all resolve |
+| `npm run verify:mobile-nav`| Phone tab bar renders the right tabs per role |
+| `npm run icons`        | Regenerate the app icons from the SVG sources in `public/` |
 
 `scripts/mint-dev-token.mjs` mints a session cookie for a given user id, which
 is handy for `curl`-ing the authenticated pages.
@@ -123,6 +130,10 @@ src/
     data.ts             all read queries
     actions/            server actions, grouped by feature
   proxy.ts              optimistic route gate
+  manifest.ts           web app manifest (Add to Home Screen)
+public/
+  icon-source.svg       master icon artwork (edit this, not the PNGs)
+deploy/                 Caddyfile, systemd unit, env template — see DEPLOY.md
 ```
 
 ---
@@ -131,6 +142,11 @@ src/
 
 - Sessions are 30-day httpOnly, `SameSite=Lax` cookies. Set `AUTH_SECRET` in
   production — the app refuses to boot without it.
+- The demo family is only seeded outside production (`SEED_DEMO` in
+  `src/lib/seed.ts`). Its accounts share the password `demo1234`, so a real
+  deployment must never contain it — `npm run verify:seed-gate` checks this.
+- On phones the nav is a fixed bottom tab bar; the pill nav is used from `sm`
+  up. Both render the same role-filtered items.
 - `node:sqlite` returns **null-prototype** rows, which React cannot send to
   Client Components. Every query in `data.ts` rebuilds rows as plain objects.
 - The database lives at `data/family.db` (override with `DATABASE_PATH`) and is

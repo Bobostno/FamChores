@@ -1,0 +1,49 @@
+# systemd unit for the Family Hub on Fedora.
+#
+#   sudo cp deploy/family-hub.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now family-hub
+#   sudo systemctl status family-hub
+#
+# Requires deploy/env.production to be in place — see DEPLOY.md.
+
+[Unit]
+Description=Family Hub
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=familyhub
+Group=familyhub
+WorkingDirectory=/opt/family-hub
+
+EnvironmentFile=/opt/family-hub/deploy/env.production
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=HOSTNAME=127.0.0.1
+
+# `next start` doesn't daemonise, so the unit supervises it directly.
+ExecStart=/usr/bin/npm start
+Restart=on-failure
+RestartSec=5
+
+# The database lives under the app directory and must survive restarts.
+ReadWritePaths=/opt/family-hub/data
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=family-hub
+
+# A little hardening — the app only needs to read its own directory and write
+# the SQLite file.
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -255,7 +255,8 @@ function IconBtn({
       title={title}
       onClick={onClick}
       className={cn(
-        "grid size-8 place-items-center rounded-full border border-line bg-white/5 text-muted transition-colors hover:bg-white/10 hover:text-fg",
+        // 44px on phones for a comfortable thumb target, denser from sm up.
+        "grid size-11 place-items-center rounded-full border border-line bg-white/5 text-muted transition-colors hover:bg-white/10 hover:text-fg sm:size-8",
         tone && tones[tone],
       )}
     >

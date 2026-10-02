@@ -1,0 +1,33 @@
+# Caddy reverse proxy for the Family Hub.
+#
+# Install to /etc/caddy/Caddyfile, then:
+#   sudo systemctl reload caddy
+#
+# Caddy obtains and renews a Let's Encrypt certificate for the hostname
+# automatically over HTTP-01, which needs inbound port 80 reachable from the
+# internet. The hostname must resolve to this machine at renewal time —
+# see DEPLOY.md if the address is dynamic (DuckDNS).
+
+gamesweplay.duckdns.org {
+	# Next.js listens on 3000 by default; PORT is set in the systemd unit.
+	reverse_proxy 127.0.0.1:3000
+
+	encode zstd gzip
+
+	# Server Actions post large-ish forms and the app never leaves the family,
+	# so the default body limit is plenty.
+	request_body {
+		max_size 1MB
+	}
+
+	header {
+		# Don't let a browser second-guess the installed app's identity.
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		-Server
+	}
+
+	log {
+		output file /var/log/caddy/family-hub.log
+	}
+}

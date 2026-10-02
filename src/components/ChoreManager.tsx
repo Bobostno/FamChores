@@ -248,7 +248,7 @@ function ApprovalQueue({
                 <button
                   type="button"
                   onClick={() => run(() => rejectChore(item.id, item.dueDate))}
-                  className="grid size-8 place-items-center rounded-full border border-line bg-white/5 text-muted transition-colors hover:bg-red-500/15 hover:text-red-300"
+                  className="grid size-11 place-items-center rounded-full border border-line bg-white/5 text-muted transition-colors hover:bg-red-500/15 hover:text-red-300 sm:size-8"
                 >
                   <X className="size-3.5" />
                   <span className="sr-only">Reject {item.title}</span>
@@ -256,7 +256,7 @@ function ApprovalQueue({
                 <button
                   type="button"
                   onClick={() => run(() => approveChore(item.id, item.dueDate))}
-                  className="flex items-center gap-1.5 rounded-full bg-mint px-3.5 py-1.5 text-xs font-semibold text-[#04261a] transition-all hover:brightness-110"
+                  className="flex min-h-11 items-center gap-1.5 rounded-full bg-mint px-4 text-xs font-semibold text-[#04261a] transition-all hover:brightness-110 sm:min-h-0 sm:px-3.5 sm:py-1.5"
                 >
                   <Check className="size-3.5" /> Approve
                 </button>

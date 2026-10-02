@@ -60,7 +60,7 @@ export function MemberEditor({
           <button
             type="button"
             onClick={onClose}
-            className="grid size-9 place-items-center rounded-full border border-line bg-white/5 text-muted transition-colors hover:bg-white/10 hover:text-fg"
+            className="grid size-11 place-items-center rounded-full border border-line bg-white/5 text-muted transition-colors hover:bg-white/10 hover:text-fg sm:size-9"
           >
             <X className="size-4" />
             <span className="sr-only">Close</span>
