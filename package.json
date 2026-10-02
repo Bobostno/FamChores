@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "smoke": "node scripts/smoke.mjs",
     "verify:ledger": "node scripts/verify-ledger.mjs",
+    "verify:seed-gate": "node scripts/verify-seed-gate.mjs",
     "check": "npm run typecheck && npm run lint && npm run build"
   },
   "dependencies": {

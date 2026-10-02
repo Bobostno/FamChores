@@ -20,7 +20,24 @@ function makeRng(seed: number) {
   };
 }
 
+/**
+ * The demo family ships with a public password (`demo1234`), so it must never
+ * appear on a real deployment — it would hand anyone who finds the hostname a
+ * signed-in account. Seeding is therefore opt-in in production; in dev it stays
+ * on so `npm run dev` still gives you something to log into.
+ *
+ * Force it on with `SEED_DEMO=1`, or off everywhere with `SEED_DEMO=0`.
+ */
+function shouldSeedDemo(): boolean {
+  const flag = process.env.SEED_DEMO;
+  if (flag === "1") return true;
+  if (flag === "0") return false;
+  return process.env.NODE_ENV !== "production";
+}
+
 export function seed(db: DatabaseSync) {
+  if (!shouldSeedDemo()) return;
+
   const existing = db
     .prepare("SELECT COUNT(*) AS n FROM families")
     .get() as { n: number };
