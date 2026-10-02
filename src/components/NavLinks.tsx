@@ -2,31 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Gift, LayoutDashboard, ListChecks, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-// Icons live here, not in the parent — a Server Component cannot pass a
-// component function across the boundary.
-const ICONS = {
-  "/dashboard": LayoutDashboard,
-  "/chores": ListChecks,
-  "/members": Users,
-  "/rewards": Gift,
-} as const;
-
-export type NavItem = {
-  href: keyof typeof ICONS;
-  label: string;
-  badge?: number;
-};
+import { NAV_ICONS, type NavItem } from "./nav";
 
 export function NavLinks({ items }: { items: NavItem[] }) {
   const pathname = usePathname();
   return (
-    <nav className="flex items-center gap-1 overflow-x-auto">
+    <nav className="hidden items-center gap-1 overflow-x-auto sm:flex">
       {items.map((item) => {
         const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
-        const Icon = ICONS[item.href];
+        const Icon = NAV_ICONS[item.href];
         return (
           <Link
             key={item.href}

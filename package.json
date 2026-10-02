@@ -12,6 +12,7 @@
     "verify:ledger": "node scripts/verify-ledger.mjs",
     "verify:seed-gate": "node scripts/verify-seed-gate.mjs",
     "verify:manifest": "node scripts/verify-manifest.mjs",
+    "verify:mobile-nav": "node scripts/verify-mobile-nav.mjs",
     "icons": "node scripts/generate-icons.mjs",
     "check": "npm run typecheck && npm run lint && npm run build"
   },
