@@ -11,6 +11,8 @@
     "smoke": "node scripts/smoke.mjs",
     "verify:ledger": "node scripts/verify-ledger.mjs",
     "verify:seed-gate": "node scripts/verify-seed-gate.mjs",
+    "verify:manifest": "node scripts/verify-manifest.mjs",
+    "icons": "node scripts/generate-icons.mjs",
     "check": "npm run typecheck && npm run lint && npm run build"
   },
   "dependencies": {
